@@ -1,0 +1,85 @@
+#include <kipr/wombat.h>
+
+void forward(int distance);
+void reverse(int distance);
+void arm_up();
+void arm_down();
+void turn_left(int distance);
+
+int main()
+{	
+  	enable_servos();
+	msleep(20);
+    forward(4800);
+    msleep(20);
+    turn_left(1100);
+    msleep(20);
+    forward(1900);
+	msleep(20);
+    turn_left(1200);
+	msleep(20);
+	forward(4000);
+	msleep(20);
+	arm_down();
+	msleep(20);
+    reverse(1000);
+    arm_up();
+   	disable_servos();
+    return 0;
+    
+}
+//-----------------------------------------------------
+//drive forward
+//----------------------------------------------------- 
+void forward(int distance)
+{
+    cmpc(0);
+    while (gmpc(0) < distance)
+    {
+        motor(0,200);				//forward
+        motor(1,200);
+    }
+    ao();
+}
+//-----------------------------------------------------
+//drive reverse
+//-----------------------------------------------------
+void reverse(int distance)
+{
+    cmpc(0);
+    while (gmpc(0) > -distance)
+    {
+        motor(0,-200);				//reverse
+        motor(1,-200);
+    }
+    ao();
+}
+//---------------------------------------------------
+//drive left
+//---------------------------------------------------
+void turn_left(int distance)
+{
+    cmpc(0);
+    while(gmpc(0) < distance)
+    {
+        motor(0,500);			//turn left
+        motor(1,-500);			
+    }
+    ao();
+}
+//--------------------------------------------------
+//arm up
+//--------------------------------------------------
+void arm_up()
+{
+    set_servo_position(0,2064);	//arm up
+    msleep(2000);
+}
+//--------------------------------------------------
+//arm down
+//--------------------------------------------------
+void arm_down()
+{
+    set_servo_position(0,1160);	//arm down
+    msleep(2000);
+} 
